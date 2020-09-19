@@ -1,21 +1,19 @@
 def matrix1():
-    mat1 = []
-    size1 = input('Enter size of first matrix: ').split()
+    mat = []
+    size = [int(x) for x in input('Enter size of first matrix: ').split()]
     print('Enter first matrix:')
-    for n in range(int(size1[0])):
-        row = list(input().split(' '))
-        mat1.append(row)
-    return size1, mat1
+    for _ in range(size[0]):
+        mat.append([float(x) for x in input().split()])
+    return size, mat
 
 
 def matrix2():
-    mat2 = []
-    size2 = input('Enter size of second matrix: ').split()
+    mat = []
+    size = [int(x) for x in input('Enter size of second matrix: ').split()]
     print('Enter second matrix:')
-    for n in range(int(size2[0])):
-        row = list(input().split(' '))
-        mat2.append(row)
-    return size2, mat2
+    for _ in range(size[0]):
+        mat.append([float(x) for x in input().split()])
+    return size, mat
 
 
 def add_matrices():
@@ -23,9 +21,9 @@ def add_matrices():
     size2, mat2 = matrix2()
     if size1 == size2:
         result = []
-        for row in range(int(size1[0])):
+        for row in range(size1[0]):
             result.append([])
-            for el in range(int(size1[1])):
+            for el in range(size1[1]):
                 result[row].append(float(mat1[row][el]) + float(mat2[row][el]))
         print_result(result, size1)
     else:
@@ -37,9 +35,9 @@ def multiply_by_const(size=None, mat=None, c=None, auto=False):
         size, mat = matrix1()
         c = float(input('Enter constant: '))
     result = []
-    for row in range(int(size[0])):
+    for row in range(size[0]):
         result.append([])
-        for el in range(int(size[1])):
+        for el in range(size[1]):
             result[row].append(float(mat[row][el]) * c)
     if auto:
         return result
@@ -53,11 +51,11 @@ def multiply_matrices():
     new_size = [size1[0], size2[1]]
     if size1[1] == size2[0]:
         result = []
-        for row in range(int(size1[0])):
+        for row in range(size1[0]):
             result.append([])
-            for col in range(int(size2[1])):
+            for col in range(size2[1]):
                 res = 0
-                for x in range(int(size2[0])):
+                for x in range(size2[0]):
                     res += float(mat1[row][x]) * float(mat2[x][col])
                 result[row].append(res)
         print_result(result, new_size)
@@ -75,12 +73,12 @@ def transpose(size=None, mat=None, auto=False):
 
     if choice2 == '1':
         result = []
-        for row in range(int(size[0])):
+        for row in range(size[0]):
             result.append([])
-            for col in range(int(size[1])):
+            for col in range(size[1]):
                 result[row].extend('0')
-        for row in range(int(size[0])):
-            for col in range(int(size[1])):
+        for row in range(size[0]):
+            for col in range(size[1]):
                 result[col][row] = mat[row][col]
         if auto:
             return result
@@ -89,25 +87,25 @@ def transpose(size=None, mat=None, auto=False):
 
     elif choice2 == '2':
         result = []
-        for row in range(int(size[0])):
+        for row in range(size[0]):
             result.append([])
-            for col in range(int(size[1])):
+            for col in range(size[1]):
                 result[row].extend('0')
-        for row in range(int(size[0])):
-            for col in range(int(size[1])):
-                result[col][row] = mat[int(size[0])-row-1][int(size[1])-col-1]
+        for row in range(size[0]):
+            for col in range(size[1]):
+                result[col][row] = mat[size[0]-row-1][size[1]-col-1]
         print_result(result, [len(result), len(result[0])])
 
     elif choice2 == '3':
         result = []
-        for row in range(int(size[0])):
+        for row in range(size[0]):
             mat[row].reverse()
             result.append(mat[row])
         print_result(result, size)
 
     elif choice2 == '4':
         result = []
-        for row in range(int(size[0])-1, -1, -1):
+        for row in range(size[0]-1, -1, -1):
             result.append(mat[row])
         print_result(result, size)
 
@@ -133,9 +131,9 @@ def minor(mat, not_i, not_j):
 def calculate_determinant(size, mat):
     if size[0] != size[1]:
         return "It's not a square matrix!"
-    elif int(size[0]) == 1:
+    elif size[0] == 1:
         return float(mat[0][0])
-    elif int(size[0]) == 2:
+    elif size[0] == 2:
         return float(mat[0][0]) * float(mat[1][1]) - float(mat[1][0]) * float(mat[0][1])
     else:
         det = 0
@@ -147,7 +145,7 @@ def calculate_determinant(size, mat):
 
 def inverse_matrix():
     size, mat = matrix1()
-    minor_size = [int(size[0]) - 1, int(size[1]) - 1]
+    minor_size = [size[0] - 1, size[1] - 1]
     det = calculate_determinant(size, mat)
     if det == 0:
         print("This matrix doesn't have an inverse.")
@@ -167,10 +165,10 @@ def inverse_matrix():
 
 def print_result(result, size):
     print('The result is:')
-    for row in range(int(size[0])):
-        for el in range(int(size[1])-1):
+    for row in range(size[0]):
+        for el in range(size[1]-1):
             print(result[row][el], end=' ')
-        print(result[row][int(size[1])-1])
+        print(result[row][size[1]-1])
 
 
 while True:
